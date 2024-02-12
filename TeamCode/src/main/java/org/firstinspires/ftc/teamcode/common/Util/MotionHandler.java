@@ -42,7 +42,7 @@ public class MotionHandler {
 
     public MotionHandler() {
         setPID(0, 0, 0);
-        setProfileConstraints(0, 0, 0);
+        setMotionProfile(0, 0, 0);
 
         this.timer = new ElapsedTime();
 
@@ -67,7 +67,7 @@ public class MotionHandler {
         return this;
     }
 
-    public MotionHandler setProfileConstraints(int velo, int accel, int decel) {
+    public MotionHandler setMotionProfile(int velo, int accel, int decel) {
         profileConstraints = new ProfileConstraints(velo, accel, decel);
 
         return this;
@@ -85,6 +85,12 @@ public class MotionHandler {
         this.feedforward = calculateFeedforward;
 
         return this;
+    }
+
+    public double getFeedforward() {
+        if (feedforward != null)
+            return feedforward.apply(new MotionState(current, target, activeTarget, timer));
+        else return 0;
     }
 
     public MotionHandler setTarget(int current, int target) {
@@ -126,8 +132,7 @@ public class MotionHandler {
 
         power += pid.calculate((double) current, activeTarget);
 
-        if (feedforward != null)
-            power += feedforward.apply(new MotionState(current, target, activeTarget, timer));
+        power += getFeedforward();
 
         power = Range.clip(power, -1, 1);
 
