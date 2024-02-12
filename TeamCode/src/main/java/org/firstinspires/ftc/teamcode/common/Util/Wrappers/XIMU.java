@@ -9,6 +9,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 public class XIMU {
     public final IMU imu;
 
+    public final XIMUThread thread;
+
     public final AngleUnit preferredUnit;
 
     public double lastYaw = 0;
@@ -21,6 +23,8 @@ public class XIMU {
     public XIMU(IMU imu, IMU.Parameters params, AngleUnit preferredUnit) {
         this.imu = imu;
 
+        this.thread = new XIMUThread(imu);
+
         imu.initialize(params);
 
         this.preferredUnit = preferredUnit;
@@ -28,6 +32,9 @@ public class XIMU {
         this.lastVelocity = new AngularVelocity(preferredUnit, 0, 0, 0, 0);
 
         resetYaw();
+
+        thread.start();
+        thread.activate();
     }
 
     public double getYawDegrees() {
@@ -79,7 +86,7 @@ public class XIMU {
     }
 
     public YawPitchRollAngles getYawPitchRoll() {
-        YawPitchRollAngles yawPitchRoll = imu.getRobotYawPitchRollAngles();
+        YawPitchRollAngles yawPitchRoll = thread.angles;
 
         lastYaw = yawPitchRoll.getYaw(preferredUnit);
         lastPitch = yawPitchRoll.getPitch(preferredUnit);
@@ -91,25 +98,66 @@ public class XIMU {
 
     public AngularVelocity getVelocityDegrees() {
         if (preferredUnit == AngleUnit.DEGREES) {
-            lastVelocity = imu.getRobotAngularVelocity(preferredUnit);
+            lastVelocity = thread.velocityDegrees;
 
             return lastVelocity;
-        } else
-            return imu.getRobotAngularVelocity(AngleUnit.DEGREES);
+        } else return thread.velocityDegrees;
     }
 
     public AngularVelocity getVelocityRadians() {
         if (preferredUnit == AngleUnit.RADIANS) {
-            lastVelocity = imu.getRobotAngularVelocity(preferredUnit);
+            lastVelocity = thread.velocityRadians;
 
             return lastVelocity;
-        } else
-            return imu.getRobotAngularVelocity(AngleUnit.RADIANS);
+        } else return thread.velocityRadians;
     }
 
     public XIMU resetYaw() {
         imu.resetYaw();
 
         return this;
+    }
+
+    public class XIMUThread extends Thread {
+        private final IMU imu;
+
+        private boolean isActive;
+
+        public volatile YawPitchRollAngles angles = new YawPitchRollAngles(AngleUnit.DEGREES, 0, 0, 0, 0);
+        public volatile AngularVelocity velocityDegrees = new AngularVelocity(AngleUnit.DEGREES, 0, 0, 0, 0);
+        public volatile AngularVelocity velocityRadians = new AngularVelocity(AngleUnit.RADIANS, 0, 0, 0, 0);
+
+        public XIMUThread(IMU imu) {
+            this.imu = imu;
+
+            this.isActive = false;
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                if (isActive) {
+                    angles = imu.getRobotYawPitchRollAngles();
+                    velocityDegrees = imu.getRobotAngularVelocity(AngleUnit.DEGREES);
+                    velocityRadians = imu.getRobotAngularVelocity(AngleUnit.RADIANS);
+                } else {
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        deactivate();
+                        interrupt();
+                        break;
+                    }
+                }
+            }
+        }
+
+        public void activate() {
+            this.isActive = true;
+        }
+
+        public void deactivate() {
+            this.isActive = false;
+        }
     }
 }
