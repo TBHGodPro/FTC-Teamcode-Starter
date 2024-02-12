@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.PIDCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.Function;
 import org.firstinspires.ftc.teamcode.common.Util.Profile.AsymmetricMotionProfile;
 import org.firstinspires.ftc.teamcode.common.Util.Profile.ProfileConstraints;
 import org.firstinspires.ftc.teamcode.common.Util.Profile.ProfileState;
@@ -22,6 +23,22 @@ public class MotionHandler {
     private PIDController pid;
 
     private AsymmetricMotionProfile profile;
+
+    private Function<MotionState, Double> feedforward;
+
+    public static class MotionState {
+        public final int current;
+        public final int target;
+        public final double activeTarget;
+        public final ElapsedTime timer;
+
+        public MotionState(int current, int target, double activeTarget, ElapsedTime timer) {
+            this.current = current;
+            this.target = target;
+            this.activeTarget = activeTarget;
+            this.timer = timer;
+        }
+    }
 
     public MotionHandler() {
         setPID(0, 0, 0);
@@ -52,6 +69,20 @@ public class MotionHandler {
 
     public MotionHandler setProfileConstraints(int velo, int accel, int decel) {
         profileConstraints = new ProfileConstraints(velo, accel, decel);
+
+        return this;
+    }
+
+    public MotionHandler setFeedforward(double staticFeedforward) {
+        this.feedforward = (MotionState state) -> {
+            return staticFeedforward;
+        };
+
+        return this;
+    }
+
+    public MotionHandler setFeedforward(Function<MotionState, Double> calculateFeedforward) {
+        this.feedforward = calculateFeedforward;
 
         return this;
     }
@@ -93,9 +124,10 @@ public class MotionHandler {
 
         double power = 0;
 
-        power += pid.calculate((double) current, target);
+        power += pid.calculate((double) current, activeTarget);
 
-        //power += getFeedForward(current);
+        if (feedforward != null)
+            power += feedforward.apply(new MotionState(current, target, activeTarget, timer));
 
         power = Range.clip(power, -1, 1);
 

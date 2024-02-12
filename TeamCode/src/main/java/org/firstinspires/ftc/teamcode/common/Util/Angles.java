@@ -10,4 +10,12 @@ public class Angles {
     public static double normalizeRadians(double radians) {
         return AngleUnit.normalizeRadians(radians);
     }
+
+    public static double degreesToRadians(double degrees) {
+        return Math.toRadians(degrees);
+    }
+
+    public static double radiansToDegrees(double radians) {
+        return Math.toDegrees(radians);
+    }
 }
