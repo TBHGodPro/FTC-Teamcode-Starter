@@ -118,6 +118,13 @@ public class XIMU {
         return this;
     }
 
+    public void stop() {
+        thread.deactivate();
+        thread.interrupt();
+        thread.destroy();
+        imu.close();
+    }
+
     public class XIMUThread extends Thread {
         private final IMU imu;
 
