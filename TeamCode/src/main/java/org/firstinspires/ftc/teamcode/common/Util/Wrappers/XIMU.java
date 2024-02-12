@@ -125,46 +125,48 @@ public class XIMU {
         imu.close();
     }
 
-    public class XIMUThread extends Thread {
-        private final IMU imu;
 
-        private boolean isActive;
+}
 
-        public volatile YawPitchRollAngles angles = new YawPitchRollAngles(AngleUnit.DEGREES, 0, 0, 0, 0);
-        public volatile AngularVelocity velocityDegrees = new AngularVelocity(AngleUnit.DEGREES, 0, 0, 0, 0);
-        public volatile AngularVelocity velocityRadians = new AngularVelocity(AngleUnit.RADIANS, 0, 0, 0, 0);
+class XIMUThread extends Thread {
+    private final IMU imu;
 
-        public XIMUThread(IMU imu) {
-            this.imu = imu;
+    private boolean isActive;
 
-            this.isActive = false;
-        }
+    public volatile YawPitchRollAngles angles = new YawPitchRollAngles(AngleUnit.DEGREES, 0, 0, 0, 0);
+    public volatile AngularVelocity velocityDegrees = new AngularVelocity(AngleUnit.DEGREES, 0, 0, 0, 0);
+    public volatile AngularVelocity velocityRadians = new AngularVelocity(AngleUnit.RADIANS, 0, 0, 0, 0);
 
-        @Override
-        public void run() {
-            while (true) {
-                if (isActive) {
-                    angles = imu.getRobotYawPitchRollAngles();
-                    velocityDegrees = imu.getRobotAngularVelocity(AngleUnit.DEGREES);
-                    velocityRadians = imu.getRobotAngularVelocity(AngleUnit.RADIANS);
-                } else {
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        deactivate();
-                        interrupt();
-                        break;
-                    }
+    public XIMUThread(IMU imu) {
+        this.imu = imu;
+
+        this.isActive = false;
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            if (isActive) {
+                angles = imu.getRobotYawPitchRollAngles();
+                velocityDegrees = imu.getRobotAngularVelocity(AngleUnit.DEGREES);
+                velocityRadians = imu.getRobotAngularVelocity(AngleUnit.RADIANS);
+            } else {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    deactivate();
+                    interrupt();
+                    break;
                 }
             }
         }
+    }
 
-        public void activate() {
-            this.isActive = true;
-        }
+    public void activate() {
+        this.isActive = true;
+    }
 
-        public void deactivate() {
-            this.isActive = false;
-        }
+    public void deactivate() {
+        this.isActive = false;
     }
 }
