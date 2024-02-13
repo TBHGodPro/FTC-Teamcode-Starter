@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.common.Constants;
 import org.firstinspires.ftc.teamcode.common.Util.MotionHandler;
 
 public class XMotor {
@@ -89,7 +90,8 @@ public class XMotor {
             power += motion.getFeedforward();
         }
 
-        if (voltage != null && shouldHandleVoltage) power *= 12.0 / voltage.getVoltage();
+        if (voltage != null && shouldHandleVoltage)
+            power *= Constants.NOMINAL_VOLTAGE / voltage.getVoltage();
 
         return power;
     }
