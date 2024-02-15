@@ -1,16 +1,16 @@
 package org.firstinspires.ftc.teamcode.common.Pathing.drive;
 
-import static org.firstinspires.ftc.teamcode.common.Pathing.drive.DriveConstants.MAX_ACCEL;
-import static org.firstinspires.ftc.teamcode.common.Pathing.drive.DriveConstants.MAX_ANG_ACCEL;
-import static org.firstinspires.ftc.teamcode.common.Pathing.drive.DriveConstants.MAX_ANG_VEL;
-import static org.firstinspires.ftc.teamcode.common.Pathing.drive.DriveConstants.MAX_VEL;
-import static org.firstinspires.ftc.teamcode.common.Pathing.drive.DriveConstants.MOTOR_VELO_PID;
-import static org.firstinspires.ftc.teamcode.common.Pathing.drive.DriveConstants.RUN_USING_ENCODER;
-import static org.firstinspires.ftc.teamcode.common.Pathing.drive.DriveConstants.TRACK_WIDTH;
-import static org.firstinspires.ftc.teamcode.common.Pathing.drive.DriveConstants.encoderTicksToInches;
-import static org.firstinspires.ftc.teamcode.common.Pathing.drive.DriveConstants.kA;
-import static org.firstinspires.ftc.teamcode.common.Pathing.drive.DriveConstants.kStatic;
-import static org.firstinspires.ftc.teamcode.common.Pathing.drive.DriveConstants.kV;
+import static org.firstinspires.ftc.teamcode.custom.DriveConstants.MAX_ACCEL;
+import static org.firstinspires.ftc.teamcode.custom.DriveConstants.MAX_ANG_ACCEL;
+import static org.firstinspires.ftc.teamcode.custom.DriveConstants.MAX_ANG_VEL;
+import static org.firstinspires.ftc.teamcode.custom.DriveConstants.MAX_VEL;
+import static org.firstinspires.ftc.teamcode.custom.DriveConstants.MOTOR_VELO_PID;
+import static org.firstinspires.ftc.teamcode.custom.DriveConstants.RUN_USING_ENCODER;
+import static org.firstinspires.ftc.teamcode.custom.DriveConstants.TRACK_WIDTH;
+import static org.firstinspires.ftc.teamcode.custom.DriveConstants.encoderTicksToInches;
+import static org.firstinspires.ftc.teamcode.custom.DriveConstants.kA;
+import static org.firstinspires.ftc.teamcode.custom.DriveConstants.kStatic;
+import static org.firstinspires.ftc.teamcode.custom.DriveConstants.kV;
 
 import androidx.annotation.NonNull;
 
@@ -45,6 +45,7 @@ import org.firstinspires.ftc.teamcode.common.Pathing.trajectorysequence.Trajecto
 import org.firstinspires.ftc.teamcode.common.Pathing.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.common.Pathing.trajectorysequence.TrajectorySequenceRunner;
 import org.firstinspires.ftc.teamcode.common.Pathing.util.LynxModuleUtil;
+import org.firstinspires.ftc.teamcode.custom.DriveConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -12,8 +12,8 @@ import com.qualcomm.robotcore.util.MovingStatistics;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.internal.system.Misc;
-import org.firstinspires.ftc.teamcode.common.Pathing.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.common.Pathing.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.custom.DriveConstants;
 
 /*
  * This routine determines the effective track width. The procedure works by executing a point turn

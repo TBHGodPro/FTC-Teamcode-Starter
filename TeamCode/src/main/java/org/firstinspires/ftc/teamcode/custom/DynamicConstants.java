@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.PIDCoefficients;
 
 import org.firstinspires.ftc.teamcode.common.Util.Side;
 
@@ -15,6 +16,8 @@ public class DynamicConstants {
                     RevHubOrientationOnRobot.LogoFacingDirection.UP,
                     RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD)
     );
+
+    public static final PIDCoefficients headingPID = new PIDCoefficients(0.04, 0.1, 0.0038);
 
     // WHEELS
     public static final String frontLeftName = "front_left";

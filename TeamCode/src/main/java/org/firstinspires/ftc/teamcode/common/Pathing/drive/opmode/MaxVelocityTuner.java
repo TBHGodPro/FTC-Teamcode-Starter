@@ -12,8 +12,8 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.common.Pathing.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.common.Pathing.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.custom.DriveConstants;
 
 import java.util.Objects;
 

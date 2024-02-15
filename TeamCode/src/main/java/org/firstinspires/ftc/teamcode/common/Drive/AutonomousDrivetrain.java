@@ -14,12 +14,12 @@ public class AutonomousDrivetrain extends SampleMecanumDrive implements BaseDriv
     }
 
     @Override
-    public void setPowers(double frontLeft, double frontRight, double backLeft, double backRight) {
+    public void setWheelPowers(double frontLeft, double frontRight, double backLeft, double backRight) {
         super.setMotorPowers(frontLeft, backLeft, backRight, frontRight);
     }
 
     @Override
-    public Double getDirection() {
+    public Double getHeading() {
         return super.getRawExternalHeading();
     }
 }
