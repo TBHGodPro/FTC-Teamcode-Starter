@@ -70,27 +70,52 @@ public class ManualDrivetrain implements BaseDrivetrain {
         return imu.getYaw();
     }
 
-    public void update(double forward, double strafe, double turn) {
+    public void update(double forward, double strafe, double turn, boolean fieldCentric) {
+        // Save Heading
+        double heading = getHeading();
+
+        // Save Inputs
+        double controlForward = forward;
+        double controlStrafe = strafe;
+        double controlTurn = turn;
+
+        // Turning Non-Linearity
+        controlTurn = controlTurn >= 0 ? Math.pow(controlTurn, DynamicConstants.turningSlope) : -Math.pow(-controlTurn, DynamicConstants.turningSlope);
+
+        // Heading Fixing
         if (wasTurning) {
-            if (turn == 0 && Math.abs(imu.getVelocityDegrees().zRotationRate) < 20)
+            if (controlTurn == 0 && Math.abs(imu.getVelocityDegrees().zRotationRate) < 20)
                 wasTurning = false;
         } else {
-            if (turn != 0) {
+            if (controlTurn != 0) {
                 currentHeading = null;
                 wasTurning = true;
             } else {
-                if (currentHeading == null) currentHeading = getHeading();
+                if (currentHeading == null) currentHeading = heading;
                 else {
-                    turn += getHeadingCorrectionPower(getHeading());
+                    controlTurn += getHeadingCorrectionPower(heading) * 0.75;
                 }
             }
         }
 
-        double frontLeft = forward + strafe + turn;
-        double frontRight = forward - strafe - turn;
-        double backLeft = forward - strafe + turn;
-        double backRight = forward + strafe - turn;
+        // Field-Centric Driving
+        if (fieldCentric) {
+            double angleDiff = (0 - heading) * Math.PI / 180;
 
+            double cos = Math.cos(angleDiff);
+            double sin = Math.sin(angleDiff);
+
+            controlStrafe = cos * controlStrafe - sin * controlForward;
+            controlForward = sin * controlStrafe + cos * controlForward;
+        }
+
+        // Add Up Powers
+        double frontLeft = controlForward + controlStrafe + controlTurn;
+        double frontRight = controlForward - controlStrafe - controlTurn;
+        double backLeft = controlForward - controlStrafe + controlTurn;
+        double backRight = controlForward + controlStrafe - controlTurn;
+
+        // Send Powers
         setWheelPowers(frontLeft, frontRight, backLeft, backRight);
     }
 
@@ -102,6 +127,11 @@ public class ManualDrivetrain implements BaseDrivetrain {
         while (diff > 180) diff -= 360;
         while (diff < -180) diff += 360;
 
-        return headingPID.calculate(diff, 0) * 0.75;
+        return headingPID.calculate(diff, 0);
+    }
+
+    public void resetHeading() {
+        imu.resetYaw();
+        currentHeading = 0d;
     }
 }

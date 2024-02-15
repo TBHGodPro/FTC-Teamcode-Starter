@@ -32,7 +32,7 @@ public class XMotor {
         this.motion = motion;
 
         getPosition();
-        setTargetPosition(getPosition());
+        setTargetPosition(getPosition(), true);
     }
 
     public XMotor setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior behavior) {
@@ -106,6 +106,10 @@ public class XMotor {
     }
 
     public XMotor setTargetPosition(int position) {
+        return setTargetPosition(position, false);
+    }
+
+    public XMotor setTargetPosition(int position, boolean force) {
         manualPower = 0;
 
         motion.setTarget(getPosition(), position);
@@ -115,7 +119,9 @@ public class XMotor {
 
     public XMotor setPower(double power) {
         manualPower = power;
-        if (manualPower == 0) motion.setTarget(getPosition(), getPosition(), true);
+        if (manualPower == 0) setTargetPosition(getPosition(), true);
+
+        update();
 
         return this;
     }

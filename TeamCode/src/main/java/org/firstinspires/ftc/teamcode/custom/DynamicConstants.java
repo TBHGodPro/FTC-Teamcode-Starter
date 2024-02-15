@@ -10,6 +10,9 @@ import org.firstinspires.ftc.teamcode.common.Util.Side;
 
 @Config
 public class DynamicConstants {
+    // INPUTS
+    public static final double turningSlope = 1.75; // 1 = linear
+
     // IMU
     public static final IMU.Parameters imuParams = new IMU.Parameters(
             new RevHubOrientationOnRobot(
