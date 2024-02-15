@@ -30,6 +30,9 @@ public class XMotor {
         this.voltage = hardwareMap.voltageSensor.get(name);
 
         this.motion = motion;
+
+        getPosition();
+        setTargetPosition(getPosition());
     }
 
     public XMotor setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior behavior) {
@@ -93,21 +96,27 @@ public class XMotor {
         if (voltage != null && shouldHandleVoltage)
             power *= Constants.NOMINAL_VOLTAGE / voltage.getVoltage();
 
-        return power;
+        return Range.clip(power, -1, 1);
     }
 
-    public void update() {
-        motor.setPower(Range.clip(getTruePower(), -1, 1));
+    public XMotor update() {
+        motor.setPower(getTruePower());
+
+        return this;
     }
 
-    public void setTargetPosition(int position) {
+    public XMotor setTargetPosition(int position) {
         manualPower = 0;
 
         motion.setTarget(getPosition(), position);
+
+        return this;
     }
 
-    public void setPower(double power) {
+    public XMotor setPower(double power) {
         manualPower = power;
         if (manualPower == 0) motion.setTarget(getPosition(), getPosition(), true);
+
+        return this;
     }
 }
