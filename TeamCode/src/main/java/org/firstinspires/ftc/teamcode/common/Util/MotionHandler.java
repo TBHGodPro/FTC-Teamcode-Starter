@@ -15,7 +15,7 @@ public class MotionHandler {
     private int target = 0;
     private double activeTarget = 0;
 
-    private ElapsedTime timer;
+    private final ElapsedTime timer;
 
     private PIDCoefficients pidCoefficients;
     private ProfileConstraints profileConstraints;
@@ -102,7 +102,7 @@ public class MotionHandler {
         if (this.target == target && this.profile != null && !force) return this;
 
         this.target = target;
-        this.activeTarget = (double) target;
+        this.activeTarget = target;
 
         profile = new AsymmetricMotionProfile(current, target, profileConstraints);
         timer.reset();
@@ -130,7 +130,7 @@ public class MotionHandler {
 
         double power = 0;
 
-        power += pid.calculate((double) current, activeTarget);
+        power += pid.calculate(current, activeTarget);
 
         power += getFeedforward();
 

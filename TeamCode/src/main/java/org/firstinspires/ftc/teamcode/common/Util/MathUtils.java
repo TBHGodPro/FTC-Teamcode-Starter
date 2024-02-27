@@ -19,7 +19,6 @@ public class MathUtils {
         return Math.toDegrees(radians);
     }
 
-
     public static int clamp(int num, int min, int max) {
         return Math.max(min, Math.min(num, max));
     }

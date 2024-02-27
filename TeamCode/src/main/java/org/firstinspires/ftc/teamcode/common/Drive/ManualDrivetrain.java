@@ -82,7 +82,7 @@ public class ManualDrivetrain implements BaseDrivetrain {
         // Turning Non-Linearity
         controlTurn = controlTurn >= 0 ? Math.pow(controlTurn, DynamicConstants.turningSlope) : -Math.pow(-controlTurn, DynamicConstants.turningSlope);
 
-        // Heading Fixing
+        // Heading PID
         if (wasTurning) {
             if (controlTurn == 0 && Math.abs(imu.getVelocityDegrees().zRotationRate) < 20)
                 wasTurning = false;

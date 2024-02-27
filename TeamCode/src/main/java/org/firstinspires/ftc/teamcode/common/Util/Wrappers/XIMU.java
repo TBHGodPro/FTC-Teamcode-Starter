@@ -124,8 +124,6 @@ public class XIMU {
         thread.destroy();
         imu.close();
     }
-
-
 }
 
 class XIMUThread extends Thread {

@@ -32,7 +32,6 @@ public class XEncoder<T> {
         return encoder.getRawVelocity();
     }
 
-
     public double getCorrectedVelocity() {
         return encoder.getCorrectedVelocity();
     }
