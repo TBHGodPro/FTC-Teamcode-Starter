@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.IMU;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.common.Util.MotionHandler;
 import org.firstinspires.ftc.teamcode.common.Util.Side;
-import org.firstinspires.ftc.teamcode.common.Util.Wrappers.XIMU;
-import org.firstinspires.ftc.teamcode.common.Util.Wrappers.XMotor;
+import org.firstinspires.ftc.teamcode.common.Wrappers.XIMU;
+import org.firstinspires.ftc.teamcode.common.Wrappers.XMotor;
 import org.firstinspires.ftc.teamcode.custom.DynamicConstants;
 
 public class ManualDrivetrain implements BaseDrivetrain {

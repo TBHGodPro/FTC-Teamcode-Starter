@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.common.Util.Wrappers;
+package org.firstinspires.ftc.teamcode.common.Wrappers;
 
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
@@ -19,7 +19,7 @@ public class XServo {
     /**
      * Custom Servo class to allow improved and customized usage of one or more servo.
      *
-     * @param servos The built-in Servo class(es) (note that only the first one is used for encoder values and such)
+     * @param servos The built-in Servo class(es)
      */
     public XServo(Servo... servos) {
         this.primaryServo = servos[0];

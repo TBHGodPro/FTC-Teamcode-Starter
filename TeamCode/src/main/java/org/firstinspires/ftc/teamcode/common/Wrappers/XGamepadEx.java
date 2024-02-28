@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.common.Util.Wrappers;
+package org.firstinspires.ftc.teamcode.common.Wrappers;
 
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.hardware.Gamepad;

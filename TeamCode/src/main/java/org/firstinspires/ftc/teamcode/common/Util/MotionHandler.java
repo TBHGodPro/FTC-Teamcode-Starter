@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Function;
+import org.firstinspires.ftc.teamcode.common.Constants;
 import org.firstinspires.ftc.teamcode.common.Util.Profile.AsymmetricMotionProfile;
 import org.firstinspires.ftc.teamcode.common.Util.Profile.ProfileConstraints;
 import org.firstinspires.ftc.teamcode.common.Util.Profile.ProfileState;
@@ -137,5 +138,9 @@ public class MotionHandler {
         power = Range.clip(power, -1, 1);
 
         return power;
+    }
+
+    public static double normalizeVoltage(double power, double voltage) {
+        return power * (Constants.NOMINAL_VOLTAGE / voltage);
     }
 }

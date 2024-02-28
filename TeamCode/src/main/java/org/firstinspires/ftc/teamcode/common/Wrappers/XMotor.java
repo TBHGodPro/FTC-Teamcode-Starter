@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.common.Util.Wrappers;
+package org.firstinspires.ftc.teamcode.common.Wrappers;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.common.Constants;
 import org.firstinspires.ftc.teamcode.common.Util.MotionHandler;
 
 public class XMotor {
@@ -94,7 +93,7 @@ public class XMotor {
         }
 
         if (voltage != null && shouldHandleVoltage)
-            power *= Constants.NOMINAL_VOLTAGE / voltage.getVoltage();
+            power = MotionHandler.normalizeVoltage(power, voltage.getVoltage());
 
         return Range.clip(power, -1, 1);
     }
