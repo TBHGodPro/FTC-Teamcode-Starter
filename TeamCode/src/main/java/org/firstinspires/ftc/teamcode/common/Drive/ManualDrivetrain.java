@@ -42,19 +42,19 @@ public class ManualDrivetrain implements BaseDrivetrain {
         this.frontLeft = new XMotor(hardwareMap, DynamicConstants.frontLeftName, new MotionHandler())
                 .setInverted(DynamicConstants.wheelInvertedSide == Side.LEFT)
                 .setZeroPowerBehavior(DynamicConstants.wheelZeroPowerBehavior)
-                .setShouldHandleVoltage(true);
+                .setShouldHandleVoltage(false);
         this.frontRight = new XMotor(hardwareMap, DynamicConstants.frontRightName, new MotionHandler())
                 .setInverted(DynamicConstants.wheelInvertedSide == Side.RIGHT)
                 .setZeroPowerBehavior(DynamicConstants.wheelZeroPowerBehavior)
-                .setShouldHandleVoltage(true);
+                .setShouldHandleVoltage(false);
         this.backLeft = new XMotor(hardwareMap, DynamicConstants.backLeftName, new MotionHandler())
                 .setInverted(DynamicConstants.wheelInvertedSide == Side.LEFT)
                 .setZeroPowerBehavior(DynamicConstants.wheelZeroPowerBehavior)
-                .setShouldHandleVoltage(true);
+                .setShouldHandleVoltage(false);
         this.backRight = new XMotor(hardwareMap, DynamicConstants.backRightName, new MotionHandler())
                 .setInverted(DynamicConstants.wheelInvertedSide == Side.RIGHT)
                 .setZeroPowerBehavior(DynamicConstants.wheelZeroPowerBehavior)
-                .setShouldHandleVoltage(true);
+                .setShouldHandleVoltage(false);
     }
 
     @Override

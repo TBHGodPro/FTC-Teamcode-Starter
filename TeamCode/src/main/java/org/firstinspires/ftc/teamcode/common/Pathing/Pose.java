@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.common.Pathing;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 
+import org.firstinspires.ftc.teamcode.common.Util.MathUtils;
+
 public class Pose extends Point {
     public double heading;
 
@@ -18,7 +20,7 @@ public class Pose extends Point {
 
     public Pose(Pose2d pose) {
         super(pose.vec());
-        this.heading = -pose.getHeading();
+        this.heading = MathUtils.radiansToDegrees(-pose.getHeading());
     }
 
     public Pose(Point point, double heading) {
@@ -83,7 +85,7 @@ public class Pose extends Point {
     }
 
     public Pose2d toPose2d() {
-        return new Pose2d(this.toVector2d(), -this.heading);
+        return new Pose2d(this.toVector2d(), MathUtils.degreesToRadians(-this.heading));
     }
 
     public static Pose fromPose2d(Pose2d pose) {
