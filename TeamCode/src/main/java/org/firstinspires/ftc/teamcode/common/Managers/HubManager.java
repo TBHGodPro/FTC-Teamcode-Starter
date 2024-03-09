@@ -13,7 +13,7 @@ public class HubManager {
     public final List<LynxModule> hubs;
     public final LynxModule controlHub;
     @Nullable
-    public LynxModule expansionHub;
+    public final LynxModule expansionHub;
 
     public HubManager(HardwareMap hardwareMap) throws Exception {
         this.hubs = hardwareMap.getAll(LynxModule.class);
@@ -59,7 +59,7 @@ public class HubManager {
 
     public void updateCache() {
         runOnEachHub(
-                hub -> hub.clearBulkCache()
+                LynxModule::clearBulkCache
         );
     }
 }
