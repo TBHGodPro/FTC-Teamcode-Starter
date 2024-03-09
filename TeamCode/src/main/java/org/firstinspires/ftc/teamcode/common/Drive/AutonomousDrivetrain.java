@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode.common.Drive;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.common.Pathing.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.common.Pathing.drive.MecanumDrive;
 
-public class AutonomousDrivetrain extends SampleMecanumDrive implements BaseDrivetrain {
+public class AutonomousDrivetrain extends MecanumDrive implements BaseDrivetrain {
     public final HardwareMap hardwareMap;
 
     public AutonomousDrivetrain(HardwareMap hardwareMap) {
@@ -21,5 +21,14 @@ public class AutonomousDrivetrain extends SampleMecanumDrive implements BaseDriv
     @Override
     public Double getHeading() {
         return super.getRawExternalHeading();
+    }
+
+    @Override
+    public void stop() {
+        super.stop();
+    }
+
+    public void update() {
+        super.update();
     }
 }

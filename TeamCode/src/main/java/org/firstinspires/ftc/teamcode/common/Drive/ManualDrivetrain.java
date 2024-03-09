@@ -134,4 +134,8 @@ public class ManualDrivetrain implements BaseDrivetrain {
         imu.resetYaw();
         currentHeading = 0d;
     }
+
+    public void stop() {
+        imu.stop();
+    }
 }

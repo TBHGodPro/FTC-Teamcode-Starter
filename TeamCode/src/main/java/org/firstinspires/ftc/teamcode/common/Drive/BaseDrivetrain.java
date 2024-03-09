@@ -8,4 +8,6 @@ public interface BaseDrivetrain {
     void setWheelPowers(double frontLeft, double frontRight, double backLeft, double backRight);
 
     Double getHeading();
+
+    void stop();
 }
